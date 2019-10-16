@@ -16,7 +16,7 @@ var routes = require("./routes/index")
 var userRoutes = require("./routes/user")
 
 var app = express()
-
+require('dotenv').config()
 mongoose.connect(process.env.MONGO_DB_URI)
 require("./config/passport")
 
