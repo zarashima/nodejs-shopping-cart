@@ -6,21 +6,21 @@ mongoose.connect(process.env.MONGODB_URI)
 
 var products = [
   new Product({
-    imagePath: faker.image.technics(),
+    imagePath: "https://i.imgur.com/fUeEwSq.jpg",
     title: faker.lorem.sentence(),
     description:
       faker.lorem.paragraph(),
     price: faker.commerce.price()
   }),
   new Product({
-    imagePath: faker.image.business(),
+    imagePath: "https://i.imgur.com/OiIgRdh.jpg",
     title: faker.lorem.sentence(),
     description:
         faker.lorem.paragraph(),
     price: faker.commerce.price()
   }),
   new Product({
-    imagePath: faker.image.city(),
+    imagePath: "https://i.imgur.com/hKJYEAH.jpg",
     title: faker.lorem.sentence(),
     description:
         faker.lorem.paragraph(),

@@ -16,7 +16,7 @@ router.get("/", function(req, res, next) {
       productChunks.push(docs.slice(i, i + chunkSize))
     }
     res.render("shop/index", {
-      title: "Carrinho de Compra",
+      title: "Shopping Cart",
       products: productChunks,
       successMsg: successMsg,
       noMessages: !successMsg
