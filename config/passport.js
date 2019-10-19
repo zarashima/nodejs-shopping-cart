@@ -103,7 +103,7 @@ passport.use(
           }
           if (!user) {
             return done(null, false, {
-              message: "Usuário não encontrado!."
+              message: "User not found!"
             })
           }
           if (!user.validPassword(password)) {
