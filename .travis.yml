@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 'v7.2.1'
+  - 'v8.3'
 services: mongodb
 env:
   - MONGO_DB_URI=mongodb://heroku_5dz699sz:lv7ccpvf614tv0se4kddu3872s@ds149353.mlab.com:49353/heroku_5dz699sz
