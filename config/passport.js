@@ -22,11 +22,11 @@ passport.use(
     },
     function(req, email, password, done) {
       req
-        .checkBody("email", "Email inválido!")
+        .checkBody("email", "Invalid email!")
         .notEmpty()
         .isEmail()
       req
-        .checkBody("password", "Senha inválida!")
+        .checkBody("password", "Invalid password")
         .notEmpty()
         .isLength({
           min: 4
@@ -50,7 +50,7 @@ passport.use(
           }
           if (user) {
             return done(null, false, {
-              message: "Este email já está sendo usado."
+              message: "This email is already in use"
             })
           }
           var newUser = new User()
@@ -81,10 +81,10 @@ passport.use(
     },
     function(req, email, password, done) {
       req
-        .checkBody("email", "Email inválido!")
+        .checkBody("email", "Invalid email")
         .notEmpty()
         .isEmail()
-      req.checkBody("password", "Senha inválida!").notEmpty()
+      req.checkBody("password", "Invalid password").notEmpty()
       var errors = req.validationErrors()
       if (errors) {
         var messages = []
@@ -108,7 +108,7 @@ passport.use(
           }
           if (!user.validPassword(password)) {
             return done(null, false, {
-              message: "Senha errada!"
+              message: "Wrong password!"
             })
           }
           return done(null, user)
