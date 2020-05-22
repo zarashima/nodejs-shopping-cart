@@ -3,7 +3,7 @@
 # NerdStore - Carrinho de Compras - NodeJS/Express
 
 # Live Demo on Heroku:
-[nodejs-shopping-cart.herokuapp.com](https://another-nodejs-shopping-cart.herokuapp.com/)
+[another-nodejs-shopping-cart.herokuapp.com](https://another-nodejs-shopping-cart.herokuapp.com/)
 
 ### Run Locally on Your Machine
 You need Node, NPM and MongoDB properly installed.
