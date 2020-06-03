@@ -37,4 +37,4 @@ jobs:
       
       steps:
       - name: smoke performance test
-        run: k6 run build/app.bundle.js
+        run: k6 run tests/performance-smoke-tests.js
