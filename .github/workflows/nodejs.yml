@@ -28,10 +28,16 @@ jobs:
       env:
         CI: true
         
-    - name: Install k6 by homebrew
-      run: brew install k6
+  k6-test:
+      name: performance-tests 
+      runs-on: ubuntu-latest
+      container: docker://loadimpact/k6:latest
+      
+      steps:
+      - name: Checkout
+        uses: actions/checkout@v1 
 
-    - name: smoke performance test
-      run: |
-        npm run-script webpack
-        k6 run build/app.bundle.js
+      - name: smoke performance test
+        run: |
+          npm run-script webpack
+          k6 run build/app.bundle.js
