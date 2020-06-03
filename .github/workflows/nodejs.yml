@@ -9,6 +9,7 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    container: docker://loadimpact/k6:latest
 
     strategy:
       matrix:
@@ -20,12 +21,14 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+
     - name: npm install, build, and test
       run: |
         npm install
         npm run build --if-present
       env:
         CI: true
+
     - name: smoke performance test
       run: |
         npm run-script webpack
