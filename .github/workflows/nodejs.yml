@@ -27,3 +27,7 @@ jobs:
         npm test
       env:
         CI: true
+    - name: smoke performance test
+      run: |
+        npm run-script webpack
+        k6 run build/app.bundle.js
