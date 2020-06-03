@@ -5,7 +5,8 @@
     "start": "node ./bin/www",
     "snapshots": "percy exec -- node ./tests/snapshots.js",
     "dev": "nodemon ./bin/www",
-    "test": "npm run snapshots"
+    "test": "npm run snapshots",
+    "webpack": "webpack"
   },
   "engines": {
     "node": "7.2.1"
@@ -30,13 +31,22 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.3.0",
-    "stripe": "^4.7.0"
+    "stripe": "^4.7.0",
+    "cheerio": "^1.0.0-rc.3",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/preset-env": "^7.10.2",
     "@percy/script": "^1.0.2",
+    "babel-loader": "^8.1.0",
     "chai": "^3.5.0",
+    "core-js": "^3.6.5",
     "jasmine": "^2.5.2",
+    "k6": "0.0.0",
     "mocha-mongoose": "^1.2.0",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   }
 }
