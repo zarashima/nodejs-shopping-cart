@@ -8,13 +8,13 @@ export let options = {
 	vus: 1,
 	duration : '30s',
 	thresholds: {
-		'http_req_duration': ['p(99)<1500'],
+		'http_req_duration': ['p(95)<1500'],
 		'error': ["rate<0.1"]
 	}
 }
 
 export default function() {
-	const res = http.get("https://another-nodejs-shopping-cart.herokuapp.com/");
+	const res = http.get(`https://${__ENV.HOST_NAME}/`);
 	const result = check(res, {
 		'status code': r => r.status === 200
 		}

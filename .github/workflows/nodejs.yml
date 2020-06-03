@@ -28,13 +28,15 @@ jobs:
         npm run-script webpack
       env:
         CI: true
-        
+
   k6-test:
       name: performance-tests
       needs: build
       runs-on: ubuntu-latest
       container: docker://loadimpact/k6:latest
-      
+
       steps:
       - name: smoke performance test
+        env:
+          HOST_NAME: another-nodejs-shopping-cart.herokuapp.com
         run: k6 run tests/performance-smoke-tests.js
