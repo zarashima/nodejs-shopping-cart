@@ -39,4 +39,4 @@ jobs:
       - name: smoke performance test
         env:
           HOST_NAME: another-nodejs-shopping-cart.herokuapp.com
-        run: k6 run tests/performance-smoke-tests.js
+        run: k6 run tests/smoke-tests.js

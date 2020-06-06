@@ -14,7 +14,8 @@ export let options = {
 }
 
 export default function() {
-	const res = http.get(`https://${__ENV.HOST_NAME}/`);
+	const host = __ENV.HOST_NAME || "another-nodejs-shopping-cart.herokuapp.com"
+	const res = http.get(`https://${host}/`);
 	const result = check(res, {
 		'status code': r => r.status === 200
 		}
