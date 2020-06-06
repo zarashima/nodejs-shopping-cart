@@ -1,9 +1,12 @@
 name: Node CI
 
 on:
+  pull_request:
+    branches: 
+      - master
   push:
     branches:
-    - master
+      - master
 
 jobs:
   build:
@@ -41,4 +44,10 @@ jobs:
       - name: smoke performance test
         env:
           HOST_NAME: another-nodejs-shopping-cart.herokuapp.com
-        run: k6 run tests/smoke-tests.js
+        run: k6 run --vus 10 tests/smoke-tests.js
+      
+      - name: load test
+        env:
+          HOST_NAME: another-nodejs-shopping-cart.herokuapp.com
+        run: k6 run --vus 50 tests/smoke-tests.js
+        
