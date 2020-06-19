@@ -1,32 +1,28 @@
+default: &defaults
+  parallelism: 1
+  working_directory: ~/repo
+
+k6_performance_tests: &k6_performance_tests
+  run:
+    name: Running k6 tests
+
+    command: |
+      docker pull loadimpact/k6:latest
+      docker run -i -v $HOME/repo:/ci/ loadimpact/k6:latest run tests/smoke-test.js
+
 version: 2
 jobs:
   build:
     docker:
       - image: circleci/node:latest
 
-    working_directory: ~/repo
-
     steps:
       - checkout
       - run: npm install
+      - *k6_performance_tests
 
-  performance_test:
-    docker:
-      - image: loadimpact/k6
-
-    working_directory: ~/report
-
-    environment:
-      HOST_NAME: another-nodejs-shopping-cart.herokuapp.com
-
-    steps:
-      - checkout
-      - run: k6 run --vus 10 "tests/smoke-test.js"
 workflows:
   version: 2
   build-and-test:
     jobs:
       - build
-      - performance_test:
-          requires:
-            - build
