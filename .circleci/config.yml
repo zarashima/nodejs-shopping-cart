@@ -22,12 +22,11 @@ jobs:
     steps:
       - run: k6 run --vus 10 tests/smoke-test.js
 
-workflow:
+workflows:
+  versions: 2
   build-and-test:
     jobs:
       - build
       - performance_test:
           requires:
             - build
-
-
