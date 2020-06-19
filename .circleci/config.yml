@@ -24,7 +24,7 @@ job:
 
 workflow:
   build-and-test:
-    jobs:
+    job:
       - build
       - performance_test:
           requires:
