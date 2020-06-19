@@ -20,6 +20,7 @@ jobs:
       HOST_NAME: another-nodejs-shopping-cart.herokuapp.com
 
     steps:
+      - checkout
       - run: k6 run --vus 10 "tests/smoke-test.js"
 workflows:
   version: 2
