@@ -8,7 +8,7 @@ k6_performance_tests: &k6_performance_tests
 
     command: |
       docker pull loadimpact/k6:latest
-      docker run -i -v $HOME/repo:/ci/ loadimpact/k6:latest run /tests/smoke-test.js
+      docker run -i -v $HOME/repo:/ci/ loadimpact/k6:latest run /repo/tests/smoke-test.js
 
 version: 2
 jobs:
