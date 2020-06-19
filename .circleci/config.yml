@@ -1,17 +1,33 @@
-version: 2.1
-orbs:
-  node: circleci/node@1.1.6
-jobs:
-  build-and-test:
-    executor:
-      name: node/default
+version: 2
+job:
+  build:
+    docker:
+      - image: circleci/node:7.10
+
+    working_directory: ~/repo
+
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm test
-workflows:
-    build-and-test:
-      jobs:
-        - build-and-test
+      - run: npm install
+
+  performance_test:
+    docker:
+      - image: loadimpact/k6
+
+    working_directory: ~/report
+
+    environment:
+      HOST_NAME: another-nodejs-shopping-cart.herokuapp.com
+
+    steps:
+      - run: k6 run --vus 10 tests/smoke-test.js
+
+workflow:
+  build-and-test:
+    jobs:
+      - build
+      - performance_test:
+          requires:
+            - build
+
+
