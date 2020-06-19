@@ -13,8 +13,7 @@ k6_performance_tests: &k6_performance_tests
 version: 2
 jobs:
   build:
-    docker:
-      - image: circleci/node:latest
+    <<: *defaults
     machine: true
     steps:
       - checkout
