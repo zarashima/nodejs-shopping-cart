@@ -21,9 +21,8 @@ jobs:
 
     steps:
       - run: k6 run --vus 10 tests/smoke-test.js
-
 workflows:
-  versions: 2
+  version: 2
   build-and-test:
     jobs:
       - build
