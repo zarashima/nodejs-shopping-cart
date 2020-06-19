@@ -1,5 +1,5 @@
 version: 2
-job:
+jobs:
   build:
     docker:
       - image: circleci/node:7.10
@@ -24,7 +24,7 @@ job:
 
 workflow:
   build-and-test:
-    job:
+    jobs:
       - build
       - performance_test:
           requires:
