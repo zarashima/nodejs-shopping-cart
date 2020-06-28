@@ -4,8 +4,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",
-    "test": "npm run snapshots",
-    "webpack": "webpack"
+    "test": "npm run snapshots"
   },
   "engines": {
     "node": "7.2.1"
@@ -43,6 +42,7 @@
     "core-js": "^3.6.5",
     "jasmine": "^2.5.2",
     "k6": "0.0.0",
+    "k6-to-junit": "^1.0.3",
     "mocha-mongoose": "^1.2.0",
     "nodemon": "^1.11.0",
     "webpack": "^4.43.0",
