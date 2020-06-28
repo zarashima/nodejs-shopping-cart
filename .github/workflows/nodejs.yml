@@ -27,7 +27,6 @@ jobs:
     - name: npm install
       run: |
         npm install
-        k6 run --vus 10 tests/smoke-tests.js | k6-to-junit report.xml
       env:
         CI: true
 
@@ -40,6 +39,12 @@ jobs:
       steps:
       - name: checkout
         uses: actions/checkout@v1
+        
+      - name: npm install
+        run: |
+          npm install
+        env:
+          CI: true
 
       - name: smoke performance test
         env:
