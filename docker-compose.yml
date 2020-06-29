@@ -1,0 +1,42 @@
+version: '3'
+services:
+
+  nodejs-shopping-cart:
+    container_name: 'shopping-cart'
+    depends_on:
+      - db
+    environment:
+      - MONGO_DB_URI=mongodb://db:27017/shopping
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: vinh/nodejs-shopping-cart
+    command: node seed/product-seeder.js
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/home/node/app
+    networks:
+      - app-networks
+
+  db:
+    image: 'mongo:4.1.8-xenial'
+    container_name: 'mongo-db'
+    env_file: .env
+    environment:
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=db
+      - MONGO_PORT=$MONGO_PORT
+      - MONGO_DB=$MONGO_DB
+    volumes:
+      - ./mongo-volume:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - app-networks
+
+networks:
+  app-networks:
+    driver: bridge
+
