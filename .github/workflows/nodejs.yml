@@ -26,7 +26,7 @@ jobs:
 
     - name: npm install
       run: |
-        npm install & npm install -g k6-to-junit
+        npm install
       env:
         CI: true
 
@@ -40,13 +40,16 @@ jobs:
       - name: checkout
         uses: actions/checkout@v1
 
+      - name: install npm
+        run: curl "https://nodejs.org/dist/latest/node-${VERSION:-$(wget -qO- https://nodejs.org/dist/latest/ | sed -nE 's|.*>node-(.*)\.pkg</a>.*|\1|p')}.pkg" > "$HOME/Downloads/node-latest.pkg" && sudo installer -store -pkg "$HOME/Downloads/node-latest.pkg" -target "/"  
+
       - name: smoke performance test
         env:
           HOST_NAME: another-nodejs-shopping-cart.herokuapp.com
-        run: k6 run --vus 10 tests/smoke-tests.js | k6-to-junit report.xml
+        run: k6 run --vus 10 tests/smoke-tests.js
       
       - name: load test
         env:
           HOST_NAME: another-nodejs-shopping-cart.herokuapp.com
-        run: k6 run --vus 50 tests/smoke-tests.js | k6-to-junit report.xml
+        run: k6 run --vus 50 tests/smoke-tests.js
         
