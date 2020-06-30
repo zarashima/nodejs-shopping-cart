@@ -43,7 +43,7 @@ pipeline{
             steps {
                 sh 'mkdir -p automation-project && cd automation-project'
                 git branch: 'master',
-                    url: 'https://github.com/zarashima/selenium-test-framework.git',
+                    url: 'https://github.com/zarashima/selenium-test-framework.git'
                 script {
                     docker.withTool('Docker') {
                         sh 'cd automation-project && ./run-tests.sh'  
