@@ -1,14 +1,20 @@
 pipeline{
     agent any
+
     environment {
         PATH = "$PATH:/usr/local/bin"
     }
+
     stages{
-        stage("Setup") {
+
+        stage("Build - Default data seed") {
             steps {
-                sh 'npm install'
+                    docker.withTool('Docker') {
+                        sh 'npm install'
+                    }
             }
         }
+
         stage('Run Tests') {
             parallel{
                 stage('Unit Test') {
@@ -34,19 +40,20 @@ pipeline{
                 }
             }
         }
-        stage("Automation Test") {
+
+        stage("Smoke Tests") {
             steps {
-                    git branch: 'master',
-                        url: 'https://github.com/zarashima/selenium-test-framework.git'
-                    script {
-                        docker.withTool('Docker') {
-                            sh 'docker pull maven:3-alpine'
-                            sh 'docker run -v $HOME/.m2:/root/.m2 -v $PWD:$PWD -w $PWD maven:3-alpine mvn clean test -Dsuite=suite'    
-                        }
-                    }
+                sh 'mkdir -p automation-project && cd automation-project'
+                git branch: 'master',
+                    url: 'https://github.com/zarashima/selenium-test-framework.git',
+                script {
+                    docker.withTool('Docker') {
+                        sh 'cd automation-project && ./run-tests.sh'    
+                }
             }
         }
     }
+
     post {
             always{
                 junit "k6-reports/*.xml"
