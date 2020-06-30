@@ -14,7 +14,7 @@ pipeline{
                 script {
                     docker.withTool('Docker') {
                         sh 'docker pull loadimpact/k6:latest'
-                        sh 'k6 run tests/smoke-tests.js'
+                        sh 'k6 run tests/smoke-tests.js | k6-to-junit reports/k6-reports.xml '
                     }
                 }
             }
@@ -22,13 +22,7 @@ pipeline{
     }
     post{
         always{
-            echo "========always========"
-        }
-        success{
-            echo "========pipeline executed successfully ========"
-        }
-        failure{
-            echo "========pipeline execution failed========"
+            junit "reports/*.xml"
         }
     }
 }
