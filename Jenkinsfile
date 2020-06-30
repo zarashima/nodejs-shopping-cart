@@ -27,7 +27,7 @@ pipeline{
                             docker.withTool('Docker') {
                                 sh 'mkdir -p k6-reports'
                                 sh 'docker pull loadimpact/k6:latest'
-                                sh 'k6 run tests/smoke-tests.js | k6-to-junit k6-reports/k6-reports.xml '
+                                sh 'k6 run tests/smoke-tests.js | k6-to-junit k6-reports/k6-reports.xml'
                             }
                         }
                     }
@@ -38,15 +38,17 @@ pipeline{
             steps {
                     git branch: 'master',
                         url: 'https://github.com/zarashima/selenium-test-framework.git'
-                    sh 'export RUNWHERE=pipeline'
-                    sh 'mvn clean test -Dsuite=suite'    
+                    docker.withTool('Docker') {
+                        sh 'docker pull maven:3-alpine'
+                        sh 'export RUNWHERE=pipeline && docker run -v $HOME/.m2:/root/.m2 -it maven:3-alpine mvn clean test -Dsuite=suite'    
+                    }
             }
         }
     }
     post {
             always{
                 junit "k6-reports/*.xml"
-                junit "target/**/*.xml"
+                junit "target/surefire-reports/**/*.xml"
             }
     }
 }
