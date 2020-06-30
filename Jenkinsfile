@@ -48,7 +48,8 @@ pipeline{
                     url: 'https://github.com/zarashima/selenium-test-framework.git',
                 script {
                     docker.withTool('Docker') {
-                        sh 'cd automation-project && ./run-tests.sh'    
+                        sh 'cd automation-project && ./run-tests.sh'  
+                    }  
                 }
             }
         }
