@@ -10,11 +10,12 @@ pipeline{
             }
         }
         stage("Performance Test") {
-            agent {
-                docker { image 'loadimpact/k6:latest' }
-            }
             steps {
-                sh 'k6 run --vus 10 tests/smoke-tests.js'
+                script {
+                    docker.withTool('Docker') {
+                        sh 'docker pull loadimpact/k6:latest'
+                    }
+                }
             }
         }
     }
