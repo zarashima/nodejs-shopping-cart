@@ -1,6 +1,10 @@
 pipeline{
     agent any
 
+    options {
+        buildDiscarder(logRotator(numToKeepStr:'10')) 
+    }
+
     environment {
         PATH = "$PATH:/usr/local/bin"
     }
@@ -41,13 +45,14 @@ pipeline{
 
         stage("Smoke Tests") {
             steps {
-                sh 'mkdir -p automation-project && cd automation-project'
-                git branch: 'master',
-                    url: 'https://github.com/zarashima/selenium-test-framework.git'
-                script {
-                    docker.withTool('Docker') {
-                        sh 'cd automation-project && ./run-tests.sh'  
-                    }  
+                dir('automation-project') {
+                    git branch: 'master',
+                        url: 'https://github.com/zarashima/selenium-test-framework.git',
+                    script {
+                        docker.withTool('Docker') {
+                            sh './run-tests.sh'  
+                        }  
+                    }
                 }
             }
         }
