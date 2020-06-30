@@ -10,7 +10,6 @@ pipeline{
     }
 
     stages{
-
         stage("Build - Default data seed") {
             steps {
                 sh 'npm install'
