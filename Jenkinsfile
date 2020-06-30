@@ -38,9 +38,11 @@ pipeline{
             steps {
                     git branch: 'master',
                         url: 'https://github.com/zarashima/selenium-test-framework.git'
-                    docker.withTool('Docker') {
-                        sh 'docker pull maven:3-alpine'
-                        sh 'export RUNWHERE=pipeline && docker run -v $HOME/.m2:/root/.m2 -it maven:3-alpine mvn clean test -Dsuite=suite'    
+                    script {
+                        docker.withTool('Docker') {
+                            sh 'docker pull maven:3-alpine'
+                            sh 'export RUNWHERE=pipeline && docker run -v $HOME/.m2:/root/.m2 -it maven:3-alpine mvn clean test -Dsuite=suite'    
+                        }
                     }
             }
         }
