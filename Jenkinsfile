@@ -33,6 +33,11 @@ pipeline{
                     }
                 }
             }
+            post{
+                always{
+                    junit "k6-reports/*.xml"
+                }
+            }
         }
         stage("Automation Test") {
             steps {
@@ -42,10 +47,10 @@ pipeline{
                     sh 'mvn clean test -Dsuite=suite'    
             }
         }
-    }
-    post{
-        always{
-            junit "k6-reports/*.xml"
+        post{
+            always{
+                junit "target/**/*.xml"
+            }
         }
     }
 }
