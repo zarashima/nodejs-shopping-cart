@@ -1,4 +1,6 @@
-pipeline{
+def baseUrl = "";
+
+pipeline {
     agent any
 
     options {
@@ -9,8 +11,8 @@ pipeline{
         PATH = "$PATH:/usr/local/bin"
     }
 
-    stages{
-        stage("Build - Default data seed") {
+    stages {
+        stage('Local Build') {
             steps {
                 sh 'npm install'
             }
@@ -18,31 +20,44 @@ pipeline{
 
         stage('Run Tests') {
             parallel{
-                stage('Unit Test') {
+                stage('Unit Tests') {
                     steps {
                         sh 'echo PASSED'
                     }
                 }
-                stage('Integration Test') {
+                stage('Integration Tests') {
                     steps {
                         sh 'echo PASSED'
                     }
                 }
-                stage("Smoke Performance Test") {
+                stage('API Tests') {
                     steps {
-                        script {
-                            docker.withTool('Docker') {
-                                sh 'mkdir -p k6-reports'
-                                sh 'docker pull loadimpact/k6:latest'
-                                sh 'k6 run tests/smoke-tests.js | k6-to-junit k6-reports/k6-reports.xml'
-                            }
+                        sh 'echo PASSED'
+                    }
+                }
+            }
+
+        stage('Local Deploy') {
+            sh 'npm run dev'
+            script {
+                baseUrl = "http://localhost:3000"
+            }
+        }    
+        
+        stage('Smoke Performance Test') {
+            steps {
+                script {
+                    docker.withTool('Docker') {
+                            sh 'mkdir -p k6-reports'
+                            sh 'docker pull loadimpact/k6:latest'
+                            sh 'k6 run tests/smoke-tests.js | k6-to-junit k6-reports/k6-reports.xml'
                         }
                     }
                 }
             }
         }
 
-        stage("Smoke Tests") {
+        stage('Smoke Tests') {
             steps {
                 dir('automation-project') {
                     git branch: 'master',
@@ -55,10 +70,29 @@ pipeline{
                 }
             }
         }
+
+        stage('Staging Deploy') {
+            steps {
+                echo 'Deployed to staging'
+            }
+        }
+
+        stage('Regression Test') {
+            steps {
+                dir('automation-project') {
+
+                }
+            }
+        }
     }
 
     post {
             always{
+                script {
+                        docker.withTool('Docker') {
+                            sh 'docker-compose down'  
+                        }  
+                    }
                 junit "k6-reports/*.xml"
                 junit "target/surefire-reports/**/*.xml"
             }
