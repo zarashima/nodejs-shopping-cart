@@ -12,6 +12,7 @@ pipeline {
     }
 
     stages {
+
         stage('Local Build') {
             steps {
                 sh 'npm install'
@@ -36,6 +37,7 @@ pipeline {
                     }
                 }
             }
+        }
 
         stage('Local Deploy') {
             sh 'npm run dev'
