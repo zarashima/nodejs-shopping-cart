@@ -55,7 +55,6 @@ pipeline {
                             sh 'mkdir -p k6-reports'
                             sh 'docker pull loadimpact/k6:latest'
                             sh 'k6 run tests/smoke-tests.js | k6-to-junit k6-reports/k6-reports.xml'
-                        }
                     }
                 }
             }
