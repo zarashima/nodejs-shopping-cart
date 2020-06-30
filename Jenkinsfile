@@ -41,7 +41,7 @@ pipeline{
                     script {
                         docker.withTool('Docker') {
                             sh 'docker pull maven:3-alpine'
-                            sh 'export RUNWHERE=pipeline && docker run -v $HOME/.m2:/root/.m2 maven:3-alpine mvn clean test -Dsuite=suite'    
+                            sh 'docker run -v $HOME/.m2:/root/.m2 -v $PWD:$PWD -w $PWD maven:3-alpine mvn clean test -Dsuite=suite'    
                         }
                     }
             }
