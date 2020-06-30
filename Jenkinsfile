@@ -41,7 +41,7 @@ pipeline {
 
         stage('Local Deploy') {
             steps {
-                sh 'npm run dev'
+                sh 'echo Local environment deployed'
                 script {
                     baseUrl = "http://localhost:3000"
                 }
