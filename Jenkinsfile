@@ -9,7 +9,7 @@ pipeline{
                 sh 'npm install'
             }
         }
-        stage("Performance Test") {
+        stage("Smoke Performance Test") {
             steps {
                 script {
                     docker.withTool('Docker') {
@@ -17,6 +17,12 @@ pipeline{
                         sh 'k6 run tests/smoke-tests.js | k6-to-junit k6-reports.xml '
                     }
                 }
+            }
+        }
+        stage("Automation Test") {
+            steps {
+                    git branch: 'master',
+                        url: 'https://github.com/zarashima/selenium-test-framework.git'
             }
         }
     }
