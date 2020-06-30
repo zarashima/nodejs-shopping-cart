@@ -9,9 +9,7 @@ pipeline{
 
         stage("Build - Default data seed") {
             steps {
-                    docker.withTool('Docker') {
-                        sh 'npm install'
-                    }
+                sh 'npm install'
             }
         }
 
