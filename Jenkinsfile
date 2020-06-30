@@ -38,7 +38,7 @@ pipeline{
             steps {
                     git branch: 'master',
                         url: 'https://github.com/zarashima/selenium-test-framework.git'
-                    sh 'export RUMWHERE=pipeline'
+                    sh 'export RUNWHERE=pipeline'
                     sh 'mvn clean test -Dsuite=suite'    
             }
         }
