@@ -13,8 +13,9 @@ pipeline{
             steps {
                 script {
                     docker.withTool('Docker') {
+                        sh 'mkdir -p k6-reports'
                         sh 'docker pull loadimpact/k6:latest'
-                        sh 'k6 run tests/smoke-tests.js | k6-to-junit k6-reports.xml '
+                        sh 'k6 run tests/smoke-tests.js | k6-to-junit k6-reports/k6-reports.xml '
                     }
                 }
             }
@@ -23,12 +24,13 @@ pipeline{
             steps {
                     git branch: 'master',
                         url: 'https://github.com/zarashima/selenium-test-framework.git'
+                    sh 'mvn clean test -Dsuite=suite'    
             }
         }
     }
     post{
         always{
-            junit "*.xml"
+            junit "k6-reports/*.xml"
         }
     }
 }
