@@ -91,11 +91,6 @@ pipeline {
 
     post {
             always{
-                script {
-                        docker.withTool('Docker') {
-                            sh 'docker-compose down'  
-                        }  
-                    }
                 junit "k6-reports/*.xml"
                 junit "target/surefire-reports/**/*.xml"
             }
