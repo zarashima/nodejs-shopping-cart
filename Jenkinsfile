@@ -13,6 +13,16 @@ pipeline {
 
     stages {
 
+        stage('Setup') {
+            steps {
+                sh 'npm install'
+                dir('automation-project') {
+                    git branch: 'master',
+                        url: 'https://github.com/zarashima/selenium-test-framework.git'
+                }
+            }
+        }
+
         stage('Local Build') {
             steps {
                 sh 'npm install'
@@ -67,7 +77,7 @@ pipeline {
                         url: 'https://github.com/zarashima/selenium-test-framework.git'
                     script {
                         docker.withTool('Docker') {
-                            sh './run-tests.sh'  
+                            sh './run-tests.sh SmokeSuite.xml'  
                         }  
                     }
                 }
@@ -83,7 +93,11 @@ pipeline {
         stage('Regression Test') {
             steps {
                 dir('automation-project') {
-
+                    script {
+                        docker.withTool('Docker') {
+                            sh './run-tests.sh RegressionSuite.xml'  
+                        }  
+                    }
                 }
             }
         }
