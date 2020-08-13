@@ -24,7 +24,7 @@ pipeline {
                         url: 'https://github.com/zarashima/another-nodejs-k6-tests.git'
                     script {
                         docker.withTool('Docker') {
-                            sh 'docker-compose up -d --force-recreate influxdb grafana'
+                            sh 'docker-compose up -d  --no-recreate influxdb grafana'
                         }
                     }
                 }
