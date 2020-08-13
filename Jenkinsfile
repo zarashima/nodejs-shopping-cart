@@ -28,7 +28,7 @@ pipeline {
                         }
                     }
                 }
-                
+            }   
         }
 
         stage('Local Build') {
