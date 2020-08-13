@@ -115,5 +115,5 @@ pipeline {
                 junit "automation-project/results/**/*.xml"
             }
         }
-    }
 }
+
