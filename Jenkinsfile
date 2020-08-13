@@ -20,7 +20,7 @@ pipeline {
                         url: 'https://github.com/zarashima/selenium-test-framework.git'
                 }
                 dir('performance-project') {
-                    git branch: 'master' 
+                    git branch: 'master', 
                         url: 'https://github.com/zarashima/another-nodejs-k6-tests.git'
                     script {
                         docker.withTool('Docker') {
