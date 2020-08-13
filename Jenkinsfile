@@ -12,7 +12,6 @@ pipeline {
     }
 
     stages {
-
         stage('Setup') {
             steps {
                 sh 'npm install'
@@ -20,7 +19,16 @@ pipeline {
                     git branch: 'master',
                         url: 'https://github.com/zarashima/selenium-test-framework.git'
                 }
-            }
+                dir('performance-project') {
+                    git branch: 'master' 
+                        url: 'https://github.com/zarashima/another-nodejs-k6-tests.git'
+                    script {
+                        docker.withTool('Docker') {
+                            sh 'docker-compose up -d --force-recreate influxdb grafana'
+                        }
+                    }
+                }
+                
         }
 
         stage('Local Build') {
@@ -29,7 +37,7 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
+        stage('Development Tests') {
             parallel{
                 stage('Unit Tests') {
                     steps {
@@ -58,13 +66,13 @@ pipeline {
             }
         }    
         
-        stage('Smoke Performance Test') {
+        stage('Performance Test') {
             steps {
                 script {
-                    docker.withTool('Docker') {
-                            sh 'mkdir -p k6-reports'
-                            sh 'docker pull loadimpact/k6:latest'
-                            sh 'k6 run tests/smoke-tests.js | k6-to-junit k6-reports/k6-reports.xml'
+                    dir ('performance-project') {                    
+                        docker.withTool('Docker') {
+                                sh 'docker-compose run -v $PWD/scripts:/scripts k6 run /smoke-tests.js'
+                        }
                     }
                 }
             }
@@ -73,11 +81,9 @@ pipeline {
         stage('Smoke Tests') {
             steps {
                 dir('automation-project') {
-                    git branch: 'master',
-                        url: 'https://github.com/zarashima/selenium-test-framework.git'
                     script {
                         docker.withTool('Docker') {
-                            sh './run-tests.sh SmokeSuite.xml'  
+                            sh './run-tests.sh SmokeSuite.xml'
                         }  
                     }
                 }
