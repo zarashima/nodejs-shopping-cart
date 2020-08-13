@@ -71,7 +71,7 @@ pipeline {
                 script {
                     dir ('performance-project') {                    
                         docker.withTool('Docker') {
-                                sh 'docker-compose run -v $PWD/scripts:/scripts k6 run scripts/smoke-tests.js'
+                                sh 'docker-compose run -v $PWD/scripts:/scripts k6 run ./scripts/smoke-tests.js'
                         }
                     }
                 }
