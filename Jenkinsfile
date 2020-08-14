@@ -22,6 +22,11 @@ pipeline {
                 dir('performance-project') {
                     git branch: 'master', 
                         url: 'https://github.com/zarashima/another-nodejs-k6-tests.git'
+                    script {
+                        docker.withTool('Docker') {
+                            sh 'docker-compose up -d --no-recreate influxdb grafana'
+                        }
+                    }
                 }
             }   
         }
