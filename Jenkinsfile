@@ -111,7 +111,6 @@ pipeline {
 
     post {
             always{
-                junit "k6-reports/*.xml"
                 junit "automation-project/results/**/*.xml"
             }
         }
