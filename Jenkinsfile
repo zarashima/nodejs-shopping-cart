@@ -21,12 +21,7 @@ pipeline {
                 }
                 dir('performance-project') {
                     git branch: 'master', 
-                        url: 'https://github.com/zarashima/another-nodejs-k6-tests.git'
-                    script {
-                        docker.withTool('Docker') {
-                            sh 'docker-compose up -d --no-recreate influxdb grafana'
-                        }
-                    }
+                        url: 'https://github.com/zarashima/taurus-perf-tests.git'
                 }
             }   
         }
@@ -71,7 +66,7 @@ pipeline {
                 script {
                     dir ('performance-project') {                    
                         docker.withTool('Docker') {
-                            sh 'docker-compose run -v $PWD/scripts:/scripts k6 run /scripts/smoke-tests.js'
+                            sh 'docker run -it --rm -v $PWD:/bzt-configs blazemeter/taurus smoke-perf-test.yml modules.blazemeter.report-name="Jenkins Build ${BUILD_NUMBER}"'
                         }
                     }
                 }
@@ -115,4 +110,3 @@ pipeline {
             }
         }
 }
-
