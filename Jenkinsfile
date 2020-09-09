@@ -66,7 +66,7 @@ pipeline {
                 script {
                     dir ('performance-project') {                    
                         docker.withTool('Docker') {
-                            sh 'docker run -it --rm -v $PWD:/bzt-configs blazemeter/taurus smoke-perf-test.yml modules.blazemeter.report-name="Jenkins Build ${BUILD_NUMBER}"'
+                            sh 'docker run --rm -v $PWD:/bzt-configs blazemeter/taurus smoke-perf-test.yml modules.blazemeter.report-name="Jenkins Build ${BUILD_NUMBER}"'
                         }
                     }
                 }
