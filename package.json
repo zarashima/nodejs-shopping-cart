@@ -30,9 +30,10 @@
     "stripe": "^4.7.0"
   },
   "devDependencies": {
-    "nodemon": "^1.11.0",
     "chai": "^3.5.0",
+    "dotenv": "^8.2.0",
     "jasmine": "^2.5.2",
-    "mocha-mongoose": "^1.2.0"
+    "mocha-mongoose": "^1.2.0",
+    "nodemon": "^1.11.0"
   }
 }
